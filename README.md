@@ -19,13 +19,13 @@ API stands for "Application Programming Interface", and an API allows two system
 
 ### What is a REST API???
 
-REST APIs are the most common type of API found online today. And, as you may have guessed, the BOLDsystems API is a REST API... but how can an API rest???? REST stands for Representational State Transfer. The main thing that sets a REST API apart from the other flavors of API's (e.g. SOAP APIs, RPC APIs, and Websocket APIs) is that REST APIs are stateless. This means that each interaction with the system is independent and infromation is not stored between requests (e.g., the client's state is not retained by the server). This, however, does mean that the user (or client) needs to provide the API with EVERYTHING it needs to process your requests EVERY time, and then the server (in this case, BOLD) will provide a response in plain text. Overall, REST defines a set of functions like `GET`, `PUT`, `DELETE`, etc. that users can use to access server data. Most of the time, if you are trying to get data off of a web service, you will be using `GET`. This limited defined list of functions allows the API to get you what you need from the server without every user on the internet having a free for all with the data.
+REST APIs are the most common type of API found online today. And, as you may have guessed, the BOLDsystems API is a REST API... but how can an API rest???? REST stands for Representational State Transfer. The main thing that sets a REST API apart from the other flavors of API's (e.g. SOAP APIs, RPC APIs, and Websocket APIs) is that REST APIs are stateless. This means that each interaction with the system is independent and infromation is not stored between requests (e.g., the client's state is not retained by the server). This, however, does mean that the user (or client) needs to provide the API with EVERYTHING it needs to process your requests EVERY time, and then the server (in this case, BOLD) will provide a response in plain text. Overall, REST defines a set of functions like `GET`, `PUT`, `DELETE`, etc. that users can use to access server data. Most of the time, if you are trying to get data off of a web service, you will be using `GET`. This limited defined list of functions allows the API to get you what you need from the server without every user on the internet having a free for all with the data. Under the hood, this is using HTTP/HTTPS (which you may recognize as the part at the being of website URLs) to send and receive data over the internet.
 
 >Fun Fact: REST APIs were first introduced in a PhD disseration in 2000!
 
 ## The BOLDsystems API
 
-[BOLDsystems](https://www.boldsystems.org/) has recently (as of March 2026) introduced a new version (version 5) of their database, with a more streamlined [barcode search function](https://id.boldsystems.org/) and fancy new [API](https://boldsystems.org/data/api/). They have a documentation page that lists each of the main fucntions of the API [here](https://portal.boldsystems.org/api/docs).
+[BOLDsystems](https://www.boldsystems.org/) has recently (as of March 2026) introduced a new version (version 5) of their database, with a more streamlined [barcode search function](https://id.boldsystems.org/) and fancy new [API](https://boldsystems.org/data/api/). See the BOLD API [documentation page](https://portal.boldsystems.org/api/docs) that lists each of the main fucntions of the API and it allows you to "try out" each of the protocols, which we will be using in the below steps to get used to how these work.
 
 ### Step 1: parse
 
@@ -39,7 +39,7 @@ Essentially, "parse" just makes a best effort to understand your plain language 
 
 For example, we gave it `"BOLD:ACQ9269" [bin]` in the `Query` field of [/api/query/parse](https://portal.boldsystems.org/api/docs#/query/query_terms_parsing_api_query_parse_get).
 
-We are given the following `curl` command:
+We are given the following `curl` command from the docs page. This `curl` command is the code for the request we are sending the API. `curl` is a command-line tool that transfers data primarily using HTTP/HTTPS and is how we are sending out `GET` reqeust to the API over the internet. See the actual command for the request below:
 
 ```bash
 /api/query/parse
@@ -69,7 +69,7 @@ The BOLD docs on [/api/query/preprocessor](https://portal.boldsystems.org/api/do
 
 For example, we next give [/api/query/preprocessor](https://portal.boldsystems.org/api/docs#/query/resolve_query_api_query_preprocessor_get) `bin:na:BOLD:ACQ9269` (the search term given to us in the previous step by `/api/query/parse`) into the `Query` field.
 
-We are given the following `curl` command:
+We are given the following `curl` command request. We can see it very similar to the prevous one:
 
 ```bash
 curl -X 'GET' \
@@ -101,7 +101,15 @@ From the BOLD API docs on [/api/query](https://portal.boldsystems.org/api/docs#/
 >query: A semicolon delimited set of "triplet" tokens. The format for each triplet is [scope]:[subscope]:[value]
 >extent: Set the number of document IDs to fetch (zero = 0 (query not run), full = all, others mappings found in EXTENT_MAP)
 
-Now, we give `/api/query` our formatted triplet search term `bin:uri:BOLD:ACQ9269` and "query" responds with:
+Now, we give `/api/query` our formatted triplet search term `bin:uri:BOLD:ACQ9269`. Again, the command-line request is:
+
+```bash
+curl -X 'GET' \
+  'https://portal.boldsystems.org/api/query?query=bin%3Auri%3ABOLD%3AACQ9269&extent=limited' \
+  -H 'accept: application/json'
+```
+
+And "query" responds with:
 
 ```json
 {
