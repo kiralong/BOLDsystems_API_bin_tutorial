@@ -180,7 +180,7 @@ First, for our header line of our script, we are going to use:
 #!/usr/bin/env -S uv run --script --with requests
 ```
 
-Here, we are using `uv` to manage our `python` project. [`uv`](https://docs.astral.sh/uv/) is a python package manager, follow the `uv` [intallation instructions](https://docs.astral.sh/uv/getting-started/installation/) to get started. You'll notice you can use `curl` once again to install `uv` too!
+Here, we are using `uv` to manage our `python` project. [`uv`](https://docs.astral.sh/uv/) is a python package manager, follow the `uv` [installation instructions](https://docs.astral.sh/uv/getting-started/installation/) to get started. You'll notice you can use `curl` once again to install `uv` too!
 
 Our header line says to run an environment in python running a script with the `requests` package.
 
