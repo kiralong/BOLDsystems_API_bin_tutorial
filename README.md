@@ -1,7 +1,6 @@
 # BOLDsystems API BIN Tutorial
 
-Tutorial on how to use the new BOLDsystems V5 API to get data based on BINs.
-This tutorial is for beginners trying to use an API for the first time. We will be using the BOLDsystems API to request data from their database based on BIN IDs. This tutorial will hopefully also be a good starting point to use the API for other data requests as well.
+Tutorial on how to use the new BOLDsystems (Barcode of Life Database) v5 API to get data based on BINs (Barcode Index Numbers). This tutorial is for beginners trying to use an API for the first time. We will be using the BOLDsystems API to request data from their database based on BIN IDs. This tutorial will hopefully also be a good starting point to use the API for other data requests as well.
 
 ## Table of Contents
 
@@ -172,3 +171,23 @@ And now we have successfully extracted data on a BIN based on it's URI from the 
 ## Scripting your API requests with python
 
 Now that we have successfully navigated getting data for a single BIN request using the BOLD API docs page, we want to be able to write a script to make and aggregate a bunch of requests for us, instead of doing each request manually.
+
+While there was an R package to connect to BOLD v4 (and I'm sure they're updating the R package for use with v5), this guide is exploring an alternative way to interface with the API using python. We will be using the python library [requests](https://requests.readthedocs.io/en/latest/user/quickstart/). This python library uses, you guessed it, HTTP to make data requests over the internet! Exactly what we need to work with an API.
+
+First, for our header line of our script, we are going to use:
+
+```python
+#!/usr/bin/env -S uv run --script --with requests
+```
+
+Here, we are using `uv` to manage our `python` project. [`uv`](https://docs.astral.sh/uv/) is a python package manager, follow the `uv` [intallation instructions](https://docs.astral.sh/uv/getting-started/installation/) to get started. You'll notice you can use `curl` once again to install `uv` too!
+
+Our header line says to run an environment in python running a script with the `requests` package.
+
+Next, we need to [install `requests`](https://requests.readthedocs.io/en/latest/user/install/#install). And then import it at the top of your script.
+
+```python
+import requests
+```
+
+Now, because we already know how to structure our "triplet" requests, we can skip `parse` and `preprocessor` and jump straight to `query` to get our `query_id`.
